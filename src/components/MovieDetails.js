@@ -1,4 +1,6 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 export default function MovieDetails(props) {
     return (
@@ -7,6 +9,7 @@ export default function MovieDetails(props) {
                 <React.Fragment>
                     <h2>{props.movie.title}</h2>
                     <p>{props.movie.description}</p>
+                    <FontAwesomeIcon icon={faStar} />
                 </React.Fragment>
             ) : (
                 <p>No movie selected</p>
