@@ -68,7 +68,7 @@ export default function MovieDetails(props) {
                     </div>
                 </div>
             ) : (
-                <p>No movie selected</p>
+                null
             )}
         </React.Fragment>
     )
