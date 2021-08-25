@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
+import API from '../api/index'
 
 export default function MovieForm(props) {
 
     const movie = props.movie
     const [title, setTitle] = useState(movie.title)
     const [description, setDescription] = useState(movie.description)
+
+    const updateClicked = () => {
+        API.updateMovie(movie, { title, description })
+            .then(resp => console.log(resp))
+            .catch(error => console.log(error))
+    }
 
     return (
         <React.Fragment>
@@ -25,7 +32,7 @@ export default function MovieForm(props) {
                         value={description}
                         onChange={e => setDescription(e.target.value)}>
                     </textarea><br />
-                    
+                    <button onClick={updateClicked}>Update</button>
                 </div>
             ) : null}
         </React.Fragment>
