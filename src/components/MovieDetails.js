@@ -12,6 +12,22 @@ export default function MovieDetails(props) {
         setHighLighted(high)
     }
 
+    const rateClicked = rate => evt => {
+        fetch(`http://127.0.0.1:8000/api/movies/${movie.id}/rate_movie/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Token d85d5f44aa2fc29c458fa234d3042a14845c27a8' // Harcoded for now
+            },
+            body: JSON.stringify({
+                stars: rate + 1
+            })
+        })
+            .then(resp => resp.json())
+            .then(resp => console.log(resp))
+            .catch(error => console.log(error))
+    }
+
     return (
         <React.Fragment>
             {movie ? (
@@ -33,6 +49,7 @@ export default function MovieDetails(props) {
                                 className={highLighted > index - 1 ? 'aqua' : ''}
                                 onMouseEnter={highLightRate(index)}
                                 onMouseLeave={highLightRate(-1)}
+                                onClick={rateClicked(index)}
                             />
                         })}
                     </div>
