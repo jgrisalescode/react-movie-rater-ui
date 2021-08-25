@@ -24,7 +24,20 @@ export default function MovieDetails(props) {
             })
         })
             .then(resp => resp.json())
-            .then(resp => console.log(resp))
+            .then(() => getDetails(movie.id))
+            .catch(error => console.log(error))
+    }
+
+    const getDetails = (id) => {
+        fetch(`http://127.0.0.1:8000/api/movies/${id}/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Token d85d5f44aa2fc29c458fa234d3042a14845c27a8' // Harcoded for now
+            }
+        })
+            .then(resp => resp.json())
+            .then(resp => props.updateMovie(resp)) // Informing the parent (App.js) to update a movie
             .catch(error => console.log(error))
     }
 
