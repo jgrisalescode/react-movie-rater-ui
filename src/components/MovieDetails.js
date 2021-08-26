@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
+import API from '../api/index'
 
 export default function MovieDetails(props) {
 
@@ -13,30 +14,13 @@ export default function MovieDetails(props) {
     }
 
     const rateClicked = rate => evt => {
-        fetch(`http://127.0.0.1:8000/api/movies/${movie.id}/rate_movie/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Token d85d5f44aa2fc29c458fa234d3042a14845c27a8' // Harcoded for now
-            },
-            body: JSON.stringify({
-                stars: rate + 1
-            })
-        })
-            .then(resp => resp.json())
-            .then(() => getDetails(movie.id))
+        API.rateMovie(movie, rate)
+            .then(() => getDetails(movie))
             .catch(error => console.log(error))
     }
 
-    const getDetails = (id) => {
-        fetch(`http://127.0.0.1:8000/api/movies/${id}/`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Token d85d5f44aa2fc29c458fa234d3042a14845c27a8' // Harcoded for now
-            }
-        })
-            .then(resp => resp.json())
+    const getDetails = (movie) => {
+        API.readMovie(movie)
             .then(resp => props.updateMovie(resp)) // Informing the parent (App.js) to update a movie
             .catch(error => console.log(error))
     }

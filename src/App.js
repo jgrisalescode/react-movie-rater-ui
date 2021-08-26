@@ -39,6 +39,7 @@ function App() {
   const deleteMovie = movie => {
     API.deleteMovie(movie)
       .then(() => getMovies())
+      .then(() => setSelectedMovie(null))
       .catch(error => console.log(error))
   }
 
