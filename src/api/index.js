@@ -23,6 +23,16 @@ export default class API {
         }).then(resp => resp.json())
     }
 
+    static deleteMovie(movie) {
+        return fetch(`http://127.0.0.1:8000/api/movies/${movie.id}/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${TOKEN}` // Harcoded for now
+            }
+        })
+    }
+
     static getMovies() {
         return fetch("http://127.0.0.1:8000/api/movies/", {
             method: 'GET',

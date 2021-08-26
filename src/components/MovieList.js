@@ -13,6 +13,10 @@ export default function MovieList(props) {
         props.editClicked(movie)
     }
 
+    const removeClicked = movie => {
+        props.removeClicked(movie)
+    }
+
     return (
         <div>
             {props.movies && props.movies.map(movie => {
@@ -20,7 +24,7 @@ export default function MovieList(props) {
                     <div key={movie.id} className="movie-item">
                         <h2 onClick={movieClicked(movie)}> {movie.title}</h2>
                         <FontAwesomeIcon icon={faEdit} onClick={() => editClicked(movie)} />
-                        <FontAwesomeIcon icon={faTrash} />
+                        <FontAwesomeIcon icon={faTrash} onClick={() => removeClicked(movie)} />
                     </div>
                 )
             })}

@@ -36,6 +36,12 @@ function App() {
     setSelectedMovie(null)
   }
 
+  const deleteMovie = movie => {
+    API.deleteMovie(movie)
+      .then(() => getMovies())
+      .catch(error => console.log(error))
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -43,7 +49,12 @@ function App() {
       </header>
       <div className="layout">
         <div>
-          <MovieList movies={movies} movieClicked={loadMovie} editClicked={editClicked} />
+          <MovieList
+            movies={movies}
+            movieClicked={loadMovie}
+            editClicked={editClicked}
+            removeClicked={deleteMovie}
+          />
           <button onClick={newMovie}>New movie</button>
         </div>
         <MovieDetails movie={selectedMovie} updateMovie={loadMovie} />
