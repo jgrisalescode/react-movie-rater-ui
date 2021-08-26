@@ -31,17 +31,9 @@ function App() {
     setSelectedMovie(null)
   }
 
-  const updatedMovie = movie => {
-    // Refetch the movies (my solution)
-    getMovies()
-    // Instructor had updated the movies array instead refetch the database
-    // const newMovies = movies.map(mov => {
-    //   if (mov.id === movie.id) {
-    //     return movie
-    //   }
-    //   return mov
-    // })
-    // setMovies(newMovies)
+  const newMovie = () => {
+    setEditedMovie({ title: '', description: '' })
+    setSelectedMovie(null)
   }
 
   return (
@@ -50,9 +42,12 @@ function App() {
         <h1>Movie rater</h1>
       </header>
       <div className="layout">
-        <MovieList movies={movies} movieClicked={loadMovie} editClicked={editClicked} />
+        <div>
+          <MovieList movies={movies} movieClicked={loadMovie} editClicked={editClicked} />
+          <button onClick={newMovie}>New movie</button>
+        </div>
         <MovieDetails movie={selectedMovie} updateMovie={loadMovie} />
-        {editedMovie ? <MovieForm movie={editedMovie} updatedMovie={updatedMovie} /> : null}
+        {editedMovie ? <MovieForm movie={editedMovie} updatedMovie={getMovies} newMovie={getMovies} /> : null}
       </div>
     </div>
   );

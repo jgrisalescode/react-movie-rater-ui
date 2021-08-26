@@ -1,15 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import API from '../api/index'
 
 export default function MovieForm(props) {
 
     const movie = props.movie
-    const [title, setTitle] = useState(movie.title)
-    const [description, setDescription] = useState(movie.description)
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+
+    useEffect(() => {
+        setTitle(movie.title)
+        setDescription(movie.description)
+    }, [movie])
 
     const updateClicked = () => {
         API.updateMovie(movie, { title, description })
             .then(resp => props.updatedMovie(resp))
+            .catch(error => console.log(error))
+    }
+
+    const createClicked = () => {
+        API.createMovie({ title, description })
+            .then(resp => props.newMovie(resp))
             .catch(error => console.log(error))
     }
 
@@ -32,7 +43,11 @@ export default function MovieForm(props) {
                         value={description}
                         onChange={e => setDescription(e.target.value)}>
                     </textarea><br />
-                    <button onClick={updateClicked}>Update</button>
+                    {
+                        movie.id ?
+                            <button onClick={updateClicked}>Update</button> :
+                            <button onClick={createClicked}>Create</button>
+                    }
                 </div>
             ) : null}
         </React.Fragment>
