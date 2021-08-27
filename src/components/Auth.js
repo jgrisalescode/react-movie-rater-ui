@@ -1,21 +1,25 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { ThemeContext } from '../context/Context'
 import API from '../api/index'
+import { ThemeContext } from '../context/Context'
+import { useCookies } from 'react-cookie'
 
 export default function Auth() {
 
     const [username, setUserName] = useState('')
     const [password, setPassword] = useState('')
-    const { token, setToken } = useContext(ThemeContext)
+    const [token, setToken] = useCookies(['token'])
+    const { user, setUser } = useContext(ThemeContext)
 
     useEffect(() => {
-        console.log(token)
-        if (token) window.location.href = '/movies'
+        if (token['token']) window.location.href = '/movies'
     }, [token])
 
     const login = () => {
         API.login({ username, password })
-            .then(resp => setToken(resp.token))
+            .then(resp => setToken('token', resp.token))
+            .then(resp => {
+                console.log('Pending the stuff with the user data')
+            })
             .catch(error => console.log(error))
     }
 

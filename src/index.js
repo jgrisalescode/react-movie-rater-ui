@@ -1,21 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import ThemeContext from './context/Context';
 import App from './App';
 import Auth from './components/Auth';
 import reportWebVitals from './reportWebVitals';
 import { Route, BrowserRouter } from 'react-router-dom'
+import ThemeContext from './context/Context';
+import { CookiesProvider } from 'react-cookie'
 
 export default function Router() {
 
   return (
     <React.StrictMode>
       <ThemeContext>
-        <BrowserRouter>
-          <Route exact path="/" component={Auth} />
-          <Route exact path="/movies" component={App} />
-        </BrowserRouter>
+        <CookiesProvider>
+          <BrowserRouter>
+            <Route exact path="/" component={Auth} />
+            <Route exact path="/movies" component={App} />
+          </BrowserRouter>
+        </CookiesProvider>
       </ThemeContext>
     </React.StrictMode>
   )
