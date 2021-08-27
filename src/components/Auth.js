@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { TokenContext } from '../index'
+import { ThemeContext } from '../context/Context'
 import API from '../api/index'
 
 export default function Auth() {
 
     const [username, setUserName] = useState('')
     const [password, setPassword] = useState('')
-    const { token, setToken } = useContext(TokenContext)
+    const { token, setToken } = useContext(ThemeContext)
 
     useEffect(() => {
         console.log(token)

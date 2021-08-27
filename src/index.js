@@ -1,25 +1,22 @@
-import React, { createContext, useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import ThemeContext from './context/Context';
 import App from './App';
 import Auth from './components/Auth';
 import reportWebVitals from './reportWebVitals';
 import { Route, BrowserRouter } from 'react-router-dom'
 
-export const TokenContext = createContext(null)
-
 export default function Router() {
-
-  const [token, setToken] = useState('')
 
   return (
     <React.StrictMode>
-      <TokenContext.Provider value={{ token, setToken }}>
+      <ThemeContext>
         <BrowserRouter>
           <Route exact path="/" component={Auth} />
           <Route exact path="/movies" component={App} />
         </BrowserRouter>
-      </TokenContext.Provider>
+      </ThemeContext>
     </React.StrictMode>
   )
 }
