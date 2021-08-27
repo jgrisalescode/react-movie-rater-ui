@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './App.css';
 import API from './api/index'
+import { useCookies } from 'react-cookie'
 import MovieList from './components/MovieList';
 import MovieDetails from './components/MovieDetails';
 import MovieForm from './components/MovieForm';
@@ -10,13 +11,18 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [editedMovie, setEditedMovie] = useState(null);
+  const [token] = useCookies(['token'])
 
   useEffect(() => {
     getMovies()
-  }, [])
+  })
+
+  useEffect(() => {
+    if (!token['token']) window.location.href = '/'
+  }, [token])
 
   const getMovies = () => {
-    API.getMovies()
+    API.getMovies(token['token'])
       .then(resp => setMovies(resp))
       .catch(error => console.log(error))
   }
@@ -37,7 +43,9 @@ function App() {
   }
 
   const deleteMovie = movie => {
-    API.deleteMovie(movie)
+    setSelectedMovie(null)
+    setEditedMovie(null)
+    API.deleteMovie(movie, token['token'])
       .then(() => getMovies())
       .then(() => setSelectedMovie(null))
       .catch(error => console.log(error))

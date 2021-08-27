@@ -12,13 +12,14 @@ export default function Auth() {
 
     useEffect(() => {
         if (token['token']) window.location.href = '/movies'
-    }, [token])
+    }, [token, user])
 
     const login = () => {
         API.login({ username, password })
             .then(resp => setToken('token', resp.token))
             .then(resp => {
-                console.log('Pending the stuff with the user data')
+                setUser({ message: 'Pending the stuff with the user data' })
+                console.log(user)
             })
             .catch(error => console.log(error))
     }

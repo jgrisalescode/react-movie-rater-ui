@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
+import API from '../api/index'
+import { useCookies } from 'react-cookie'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
-import API from '../api/index'
 
 export default function MovieDetails(props) {
 
     const [highLighted, setHighLighted] = useState(-1)
+    const [token] = useCookies(['token'])
 
     const movie = props.movie
 
@@ -14,13 +16,13 @@ export default function MovieDetails(props) {
     }
 
     const rateClicked = rate => evt => {
-        API.rateMovie(movie, rate)
+        API.rateMovie(movie, rate, token['token'])
             .then(() => getDetails(movie))
             .catch(error => console.log(error))
     }
 
     const getDetails = (movie) => {
-        API.readMovie(movie)
+        API.readMovie(movie, token['token'])
             .then(resp => props.updateMovie(resp)) // Informing the parent (App.js) to update a movie
             .catch(error => console.log(error))
     }

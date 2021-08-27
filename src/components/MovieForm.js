@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useCookies } from 'react-cookie'
 import API from '../api/index'
 
 export default function MovieForm(props) {
@@ -6,6 +7,7 @@ export default function MovieForm(props) {
     const movie = props.movie
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
+    const [token] = useCookies(['token'])
 
     useEffect(() => {
         setTitle(movie.title)
@@ -13,13 +15,13 @@ export default function MovieForm(props) {
     }, [movie])
 
     const updateClicked = () => {
-        API.updateMovie(movie, { title, description })
+        API.updateMovie(movie, { title, description }, token['token'])
             .then(resp => props.updatedMovie(resp))
             .catch(error => console.log(error))
     }
 
     const createClicked = () => {
-        API.createMovie({ title, description })
+        API.createMovie({ title, description }, token['token'])
             .then(resp => props.newMovie(resp))
             .catch(error => console.log(error))
     }
