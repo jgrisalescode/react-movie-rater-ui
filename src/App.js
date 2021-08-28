@@ -7,6 +7,7 @@ import MovieDetails from './components/MovieDetails';
 import MovieForm from './components/MovieForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilm, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { useFetch } from './hooks/useFetch'
 
 function App() {
 
@@ -14,10 +15,15 @@ function App() {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [editedMovie, setEditedMovie] = useState(null);
   const [token, setToken, deleteToken] = useCookies(['token'])
+  const [data, loading, error] = useFetch()
+
+  // useEffect(() => {
+  //   getMovies()
+  // })
 
   useEffect(() => {
-    getMovies()
-  })
+    setMovies(data)
+  }, [data])
 
   useEffect(() => {
     if (!token['token']) window.location.href = '/'
@@ -57,6 +63,8 @@ function App() {
     deleteToken(['token']);
   }
 
+  if (loading) return <h1>Loading...</h1>
+  if (error) return <h1>Error loading movies</h1>
   return (
     <div className="App">
       <header className="App-header">
