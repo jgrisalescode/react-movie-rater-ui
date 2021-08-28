@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ThemeContext } from '../context/Context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 export default function MovieList(props) {
+
+    const { user, setUser } = useContext(ThemeContext)
 
     const movieClicked = movie => evt => {
         props.movieClicked(movie)

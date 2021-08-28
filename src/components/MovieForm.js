@@ -26,6 +26,8 @@ export default function MovieForm(props) {
             .catch(error => console.log(error))
     }
 
+    const isDisabled = title.length === 0 || description.length === 0
+
     return (
         <React.Fragment>
             {movie ? (
@@ -47,8 +49,8 @@ export default function MovieForm(props) {
                     </textarea><br />
                     {
                         movie.id ?
-                            <button onClick={updateClicked}>Update</button> :
-                            <button onClick={createClicked}>Create</button>
+                            <button onClick={updateClicked} disabled={isDisabled}>Update</button> :
+                            <button onClick={createClicked} disabled={isDisabled}>Create</button>
                     }
                 </div>
             ) : null}
